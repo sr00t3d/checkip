@@ -4,6 +4,8 @@
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/sr00t3d/checkip/releases) [![Shell](https://img.shields.io/badge/bash-4.0+-blue.svg)](https://www.gnu.org/software/bash/)
 
+![Capa CheckIP](checkip-cover.webp)
+
 `checkip.sh` é uma CLI leve em Bash para reconhecimento rápido de IPs e domínios: resolve domínios para IPv4/IPv6, consulta DNS Reverso (PTR), ASN/ISP/Anycast e geolocalização aproximada em nível cidade/ISP (`ipinfo.io` com fallback automático `ipwho.is`), consulta o bloco oficial via **RDAP de IP** (`rdap.org/ip/<ip>`) e gera saídas em `table`, `json` e `csv`.
 
 > **Créditos Históricos:** Refatorado do script original de 2012 de **Percio Andrade (Percio Castelo)**. Substituiu a antiga API desativada do Google Geocoding e o `hostname -i` por APIs HTTPS modernas, RDAP oficial de IP e transparência sobre a precisão de geolocalização por IP.
