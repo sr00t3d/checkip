@@ -192,18 +192,18 @@ query_geo() {
     GEO_SOURCE="ipinfo.io"
     local parsed=""
     if [[ "$HAVE_JQ" -eq 1 ]]; then
-      parsed="$(jq -r '[(.city // ""), (.region // ""), (.country // ""), (.postal // ""), (.timezone // ""), (.loc // ""), (.org // ""), ((.anycast // false) | tostring)] | join("\t")' 2>/dev/null <<<"$body" || true)"
+      parsed="$(jq -r '[(.city // ""), (.region // ""), (.country // ""), (.postal // ""), (.timezone // ""), (.loc // ""), (.org // ""), ((.anycast // false) | tostring)] | join("\u001f")' 2>/dev/null <<<"$body" || true)"
     elif [[ "$HAVE_PY3" -eq 1 ]]; then
       parsed="$(python3 -c '
 import json, sys
 d = json.loads(sys.stdin.read())
 vals = [d.get("city",""), d.get("region",""), d.get("country",""), d.get("postal",""), d.get("timezone",""), d.get("loc",""), d.get("org",""), str(bool(d.get("anycast", False))).lower()]
-print("\t".join(str(v or "") for v in vals))
+print("\x1f".join(str(v or "") for v in vals))
 ' 2>/dev/null <<<"$body" || true)"
     fi
     if [[ -n "$parsed" ]]; then
       local loc=""
-      IFS=$'\t' read -r CITY REGION COUNTRY POSTAL TIMEZONE loc ASN_ORG ANYCAST <<<"$parsed"
+      IFS=$'\x1f' read -r CITY REGION COUNTRY POSTAL TIMEZONE loc ASN_ORG ANYCAST <<<"$parsed"
       if [[ "$loc" == *,* ]]; then
         LAT="${loc%%,*}"
         LON="${loc#*,}"
@@ -227,9 +227,9 @@ asn = conn.get("asn", "")
 oname = conn.get("org") or conn.get("isp") or ""
 org = ("AS%s %s" % (asn, oname)).strip() if asn else oname
 vals = [d.get("city",""), d.get("region",""), d.get("country_code",""), d.get("postal",""), tz, d.get("latitude",""), d.get("longitude",""), org]
-print("\t".join(str(v or "") for v in vals))
+print("\x1f".join(str(v or "") for v in vals))
 ' 2>/dev/null <<<"$body" || true)"
-        IFS=$'\t' read -r CITY REGION COUNTRY POSTAL TIMEZONE LAT LON ASN_ORG <<<"$parsed"
+        IFS=$'\x1f' read -r CITY REGION COUNTRY POSTAL TIMEZONE LAT LON ASN_ORG <<<"$parsed"
       fi
     fi
   fi
@@ -248,7 +248,7 @@ query_rdap_ip() {
 
   local parsed=""
   if [[ "$HAVE_JQ" -eq 1 ]]; then
-    parsed="$(jq -r '[(.name // ""), (.handle // ""), (.country // ""), (if .cidr0_cidrs then ([.cidr0_cidrs[] | "\(.v4prefix // .v6prefix)/\(.length)"] | join(", ")) else (if .startAddress and .endAddress then "\(.startAddress) - \(.endAddress)" else "" end) end)] | join("\t")' 2>/dev/null <<<"$body" || true)"
+    parsed="$(jq -r '[(.name // ""), (.handle // ""), (.country // ""), (if .cidr0_cidrs then ([.cidr0_cidrs[] | "\(.v4prefix // .v6prefix)/\(.length)"] | join(", ")) else (if .startAddress and .endAddress then "\(.startAddress) - \(.endAddress)" else "" end) end)] | join("\u001f")' 2>/dev/null <<<"$body" || true)"
   elif [[ "$HAVE_PY3" -eq 1 ]]; then
     parsed="$(python3 -c '
 import json, sys
@@ -266,11 +266,11 @@ elif d.get("startAddress") and d.get("endAddress"):
     cidr = "%s - %s" % (d["startAddress"], d["endAddress"])
 else:
     cidr = ""
-print("\t".join(str(x or "") for x in [d.get("name",""), d.get("handle",""), d.get("country",""), cidr]))
+print("\x1f".join(str(x or "") for x in [d.get("name",""), d.get("handle",""), d.get("country",""), cidr]))
 ' 2>/dev/null <<<"$body" || true)"
   fi
   if [[ -n "$parsed" ]]; then
-    IFS=$'\t' read -r RDAP_NET_NAME RDAP_HANDLE RDAP_COUNTRY RDAP_CIDR <<<"$parsed"
+    IFS=$'\x1f' read -r RDAP_NET_NAME RDAP_HANDLE RDAP_COUNTRY RDAP_CIDR <<<"$parsed"
   fi
 }
 
