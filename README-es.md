@@ -23,3 +23,13 @@ checkip -o csv 1.1.1.1
 ## Licencia
 
 Licenciado bajo la [Apache License 2.0](LICENSE).
+
+## Windows (PowerShell `checkip.ps1`)
+
+Cero dependencias externas — funciona de forma nativa en **Windows PowerShell 5.1** y **PowerShell 7+**:
+
+```powershell
+.\checkip.ps1 1.1.1.1
+.\checkip.ps1 1.1.1.1 8.8.8.8 -Output csv
+.\checkip.ps1 -MyIp -Output json
+```
