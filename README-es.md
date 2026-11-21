@@ -20,16 +20,26 @@ checkip -o json 8.8.8.8
 checkip -o csv 1.1.1.1
 ```
 
-## Licencia
+## Ejecución Directa & Windows PowerShell
 
-Licenciado bajo la [Apache License 2.0](LICENSE).
+### Linux / macOS (Ejecución Directa)
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/sr00t3d/checkip/main/checkip.sh) 1.1.1.1
+```
 
-## Windows (PowerShell `checkip.ps1`)
-
-Cero dependencias externas — funciona de forma nativa en **Windows PowerShell 5.1** y **PowerShell 7+**:
+### Windows (PowerShell `checkip.ps1`)
+Cero dependencias externas — compatible con **Windows PowerShell 5.1+** y **PowerShell 7+**:
 
 ```powershell
+# Ejecución directa (sin clonar)
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/sr00t3d/checkip/main/checkip.ps1))) 1.1.1.1
+
+# Ejecución local
 .\checkip.ps1 1.1.1.1
 .\checkip.ps1 1.1.1.1 8.8.8.8 -Output csv
 .\checkip.ps1 -MyIp -Output json
 ```
+
+## Licencia
+
+Licenciado bajo la [Apache License 2.0](LICENSE).

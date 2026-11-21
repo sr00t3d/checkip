@@ -37,6 +37,26 @@ checkip -o json 8.8.8.8
 checkip -o csv 1.1.1.1
 ```
 
+## Direct Execution & Windows PowerShell
+
+### Linux / macOS (Direct Execution)
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/sr00t3d/checkip/main/checkip.sh) 1.1.1.1
+```
+
+### Windows (PowerShell `checkip.ps1`)
+Zero external dependencies — works natively on **Windows PowerShell 5.1+** and **PowerShell 7+**:
+
+```powershell
+# Direct execution (no clone required)
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/sr00t3d/checkip/main/checkip.ps1))) 1.1.1.1
+
+# Local execution
+.\checkip.ps1 1.1.1.1
+.\checkip.ps1 1.1.1.1 8.8.8.8 -Output csv
+.\checkip.ps1 -MyIp -Output json
+```
+
 ## Real Output Example
 
 ### Table Output (`checkip.sh --no-color 1.1.1.1`)
@@ -89,13 +109,3 @@ checkip -o csv 1.1.1.1
 ## License
 
 Licensed under the [Apache License 2.0](LICENSE).
-
-## Windows (PowerShell `checkip.ps1`)
-
-Zero external dependencies — works natively on **Windows PowerShell 5.1** and **PowerShell 7+**:
-
-```powershell
-.\checkip.ps1 1.1.1.1
-.\checkip.ps1 1.1.1.1 8.8.8.8 -Output csv
-.\checkip.ps1 -MyIp -Output json
-```
